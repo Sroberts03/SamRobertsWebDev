@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bird Watching Hobby</title>
+    <!-- Linking our custom from-scratch CSS -->
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body id="page-top">
+
+    <div class="header-container">
+        <h1>My Bird Watching Adventure</h1>
+        <p>A fun hobby I developed over the years! (This is my scratch page)</p>
+        
+        <!-- Navigation -->
+        <p>
+            <a href="../index.html">Back to Professional Portfolio</a> | 
+            <a href="app.html">Play my Number Guessing Mini Match</a>
+        </p>
+    </div>
+
+    <!-- Main Content Layout using generic divs -->
+    <div class="main-content">
+        
+        <!-- Panel 1: Information and Lists -->
+        <div class="content-panel">
+            <h2 id="birds-list">Why I Love Tropical Birds</h2>
+            <p>Tropical birds are amazing. They have vibrant colors, unique behaviors, and are found in some of the most beautiful places on Earth.</p>
+            <img src="../images/parrot.jpeg" alt="A colorful parrot sitting on a branch" class="bird-image">
+            
+            <h3>Top 3 Tropical Environments to Visit</h3>
+            <!-- Ordered list containing an unordered list -->
+            <ol>
+                <li>The Amazon Rainforest, South America
+                    <ul>
+                        <li>Macaws</li>
+                        <li>Toucans</li>
+                        <li>Hoatzin</li>
+                    </ul>
+                </li>
+                <li>The Congo Basin, Africa
+                    <ul>
+                        <li>Congo Peafowl</li>
+                        <li>African Grey Parrots</li>
+                    </ul>
+                </li>
+                <li>Southeast Asia Tropical Forests
+                    <ul>
+                        <li>Hornbills</li>
+                        <li>Birds-of-Paradise</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <a href="#page-top">Jump back to the top of the page (On-Page Anchor)</a>
+        </div>
+
+        <!-- Panel 2: Multimedia (Video and Tableau Graph) -->
+        <div class="content-panel">
+            <h2>Bird Watching Video</h2>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/vPhg6sc1Mk4?si=rO34234x23kM" title="YouTube video - Birds in 4k" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <h2>Interactive Tableau Bird Data (Example)</h2>
+            <p>Here is an example Tableau Dashboard showing different data trends (using the public Superstore dataset to satisfy the interactive Tableau requirement):</p>
+            
+            <!-- Tableau Public Embed Code -->
+            <div class='tableauPlaceholder' id='viz171329' style='position: relative; width: 100%;'>
+                <noscript><a href='#'><img alt='Dashboard ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Su&#47;Superstore_24&#47;Overview&#47;1_rss.png' style='border: none' /></a></noscript>
+                <object class='tableauViz'  style='display:none;'>
+                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
+                    <param name='embed_code_version' value='3' /> 
+                    <param name='site_root' value='' />
+                    <param name='name' value='Superstore_24&#47;Overview' />
+                    <param name='tabs' value='no' />
+                    <param name='toolbar' value='yes' />
+                    <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Su&#47;Superstore_24&#47;Overview&#47;1.png' /> 
+                    <param name='animate_transition' value='yes' />
+                    <param name='display_static_image' value='yes' />
+                    <param name='display_spinner' value='yes' />
+                    <param name='display_overlay' value='yes' />
+                    <param name='display_count' value='yes' />
+                    <param name='language' value='en-US' />
+                </object>
+            </div>
+            <!-- Tableau script loading -->
+            <script type='text/javascript'>
+                var divElement = document.getElementById('viz171329');
+                var vizElement = divElement.getElementsByTagName('object')[0];
+                vizElement.style.width='100%';vizElement.style.minHeight='500px';vizElement.style.border='none';
+                var scriptElement = document.createElement('script');
+                scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+                vizElement.parentNode.insertBefore(scriptElement, vizElement);
+            </script>
+            <!-- End Tableau Embed -->
+        </div>
+
+    </div>
+
+    <div class="footer-panel">
+        <p>Created by Samuel Roberts for IS201</p>
+    </div>
+
+</body>
+</html>

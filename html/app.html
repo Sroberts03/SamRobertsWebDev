@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <!-- Use Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-color: #f8fafc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .container {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.instructions {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Hide Number Input Arrows */
+        input[type="number"]::-webkit-inner-spin-button, 
+        input[type="number"]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.23);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .message {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            min-height: 30px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        /* Game States */
+        .msg-low { color: #facc15; }
+        .msg-high { color: #f87171; }
+        .msg-win { color: #4ade80; animation: bounce 0.5s; }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        #resetBtn {
+            display: none;
+            background: #10b981;
+            margin-top: 1rem;
+            box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+        }
+        #resetBtn:hover {
+            background: #059669;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Guess the Number</h1>
+        <p class="instructions">I'm thinking of a number between <strong>1 and 100</strong>.</p>
+        
+        <div class="input-group">
+            <input type="number" id="guessInput" placeholder="Enter your guess..." min="1" max="100">
+        </div>
+        
+        <button class="btn" id="guessBtn">Submit Guess</button>
+        <button class="btn" id="resetBtn">Play Again</button>
+        
+        <div class="message" id="message"></div>
+    </div>
+
+    <a href="scratch.html" class="nav-link">&larr; Back to Scratch Page</a>
+
+    <script>
+        // Game Logic
+        let targetNumber = generateRandomNumber();
+        let attempts = 0;
+        
+        const guessInput = document.getElementById('guessInput');
+        const guessBtn = document.getElementById('guessBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const messageEl = document.getElementById('message');
+
+        function generateRandomNumber() {
+            return Math.floor(Math.random() * 100) + 1;
+        }
+
+        function checkGuess() {
+            const guessVal = guessInput.value;
+            
+            if (!guessVal || isNaN(guessVal) || guessVal < 1 || guessVal > 100) {
+                showMessage("Please enter a valid number between 1 and 100.", "msg-high");
+                return;
+            }
+
+            const guess = parseInt(guessVal);
+            attempts++;
+
+            if (guess === targetNumber) {
+                showMessage(`🎉 Amazing! You guessed it in ${attempts} attempts!`, "msg-win");
+                endGame();
+            } else if (guess < targetNumber) {
+                showMessage(`📉 ${guess} is too low. Try higher!`, "msg-low");
+            } else {
+                showMessage(`📈 ${guess} is too high. Try lower!`, "msg-high");
+            }
+            
+            guessInput.value = '';
+            guessInput.focus();
+        }
+
+        function showMessage(text, className) {
+            messageEl.textContent = text;
+            messageEl.className = `message ${className}`;
+        }
+
+        function endGame() {
+            guessInput.disabled = true;
+            guessBtn.style.display = 'none';
+            resetBtn.style.display = 'block';
+        }
+
+        function resetGame() {
+            targetNumber = generateRandomNumber();
+            attempts = 0;
+            guessInput.disabled = false;
+            guessInput.value = '';
+            messageEl.textContent = '';
+            messageEl.className = 'message';
+            guessBtn.style.display = 'block';
+            resetBtn.style.display = 'none';
+            guessInput.focus();
+        }
+
+        // Event Listeners
+        guessBtn.addEventListener('click', checkGuess);
+        resetBtn.addEventListener('click', resetGame);
+        guessInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkGuess();
+            }
+        });
+    </script>
+</body>
+</html>
