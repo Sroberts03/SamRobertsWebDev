@@ -38,6 +38,15 @@ a:hover {
     border-bottom: 5px solid #004d40;
 }
 
+.header-container a {
+    color: #e0f7fa;
+    text-decoration: underline;
+}
+
+.header-container a:hover {
+    color: #ffffff;
+}
+
 /* 3. Header Text */
 .header-container h1 {
     margin: 0;
